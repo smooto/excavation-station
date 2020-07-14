@@ -1,0 +1,17 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 50px);
+  grid-gap: 5px;
+}
+
+.cell {
+  height: 50px;
+  width: 50px;
+  background-color: gray;
+}
+
+.treasure {
+  height: 50px;
+  width: 50px;
+  background-color: gold;
+}
