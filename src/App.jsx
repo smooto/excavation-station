@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Cell from './Cell';
 import './App.css';
 
 function App() {
   const [grid, setGrid] = useState({ rows: 6, columns: 6 })
   const [maxFossils, setMaxFossils] = useState(2)
   const [fossilSpots, setFossilSpots] = useState([])
+  const [maxTileClicks , setMaxTileClicks] = useState(5)
 
   useEffect(() => {
     const spots = Array(maxFossils).fill(undefined).map(cell => {
@@ -21,7 +23,9 @@ function App() {
         {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
-              return (fossilSpots.includes(i)) ? <div class="cell" onClick={toggleColor}>X</div> : <div class="cell" onClick={toggleColor}></div>;
+              return (fossilSpots.includes(i))
+                ? <Cell onClick={toggleColor} tile={tileLevel(maxTileClicks)} hasFossil={true} />
+                : <Cell onClick={toggleColor} tile={tileLevel(maxTileClicks)} hasFossil={false} />;
             })
         }
       </div>
@@ -35,7 +39,11 @@ function toggleColor() {
 
 // eventually, cell can be its own component
 function makeGrid(rows, columns) {
-  return Array(rows * columns).fill(undefined)
+  return Array(rows * columns).fill(<Cell onClick={toggleColor} hasFossil={false} />)
+}
+
+function tileLevel(maxClicks) {
+  return Math.ceil(Math.random() * (maxClicks))
 }
 
 export default App;
