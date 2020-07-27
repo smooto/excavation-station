@@ -5,12 +5,16 @@ import './App.css';
 
 function App() {
   const [grid, setGrid] = useState({ rows: 6, columns: 6 })
-  const [fossil, setFossil] = useState(0)
+  const [maxFossils, setMaxFossils] = useState(2)
+  const [fossilSpots, setFossilSpots] = useState([])
 
   useEffect(() => {
-    const spot = Math.floor(Math.random() * (grid.rows * grid.columns))
-    setFossil(spot)
-  }, [grid])
+    const spots = Array(maxFossils).fill(undefined).map(cell => {
+      return Math.floor(Math.random() * (grid.rows * grid.columns))
+    })
+
+    setFossilSpots(spots)
+  }, [grid, maxFossils])
 
   return (
     <>
@@ -19,7 +23,7 @@ function App() {
         {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
-              return (i === fossil) ? <div class="cell" onClick={toggleColor}>X</div> : <div class="cell" onClick={toggleColor}></div>;
+              return (fossilSpots.includes(i)) ? <div class="cell" onClick={toggleColor}>X</div> : <div class="cell" onClick={toggleColor}></div>;
             })
         }
       </div>
