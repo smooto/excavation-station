@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Cell from './Cell';
 import './App.css';
 
+const gameLevels = {
+  1: [3, 5],
+  2: [3, 5, 7]
+}
+
 function App() {
   const [grid, setGrid] = useState({ rows: 6, columns: 6 })
   const [maxFossils, setMaxFossils] = useState(2)
   const [fossilSpots, setFossilSpots] = useState([])
-  const [maxTileClicks , setMaxTileClicks] = useState(5)
+  const [level, setLevel] = useState(2)
+  // const [maxTileClicks , setMaxTileClicks] = useState(5)
 
   useEffect(() => {
     const spots = Array(maxFossils).fill(undefined).map(cell => {
@@ -24,8 +30,8 @@ function App() {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
               return (fossilSpots.includes(i))
-                ? <Cell onClick={toggleColor} tile={tileLevel(maxTileClicks)} hasFossil={true} />
-                : <Cell onClick={toggleColor} tile={tileLevel(maxTileClicks)} hasFossil={false} />;
+                ? <Cell onClick={toggleColor} tile={getTile(level)} hasFossil={true} />
+                : <Cell onClick={toggleColor} tile={getTile(level)} hasFossil={false} />;
             })
         }
       </div>
@@ -42,8 +48,9 @@ function makeGrid(rows, columns) {
   return Array(rows * columns).fill(<Cell onClick={toggleColor} hasFossil={false} />)
 }
 
-function tileLevel(maxClicks) {
-  return Math.ceil(Math.random() * (maxClicks))
+function getTile(gameLevel) {
+  const validTiles = gameLevels[gameLevel]
+  return validTiles[Math.floor(Math.random() * validTiles.length)]
 }
 
 export default App;
