@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { grid, buryTreasure, addFirstLayer } from './engine/grid';
 // import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [grid, setGrid] = useState({ rows: 9, columns: 3 })
-  const [fossil, buryFossil] = useState({})
+  const [grid, setGrid] = useState({ rows: 6, columns: 6 })
+  const [fossil, setFossil] = useState(0)
+
+  useEffect(() => {
+    const spot = Math.floor(Math.random() * (grid.rows * grid.columns))
+    setFossil(spot)
+  }, [grid])
 
   return (
     <>
@@ -13,6 +18,9 @@ function App() {
       <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 50px)`}}>
         {
           makeGrid(grid.rows, grid.columns)
+            .map((cell, i) => {
+              return (i === fossil) ? <div class="cell" onClick={toggleColor}>X</div> : <div class="cell" onClick={toggleColor}></div>;
+            })
         }
       </div>
     </>
@@ -28,18 +36,16 @@ function toggleColor() {
 
 // eventually, cell can be its own component
 function makeGrid(rows, columns) {
-  // return Array(rows).fill(
-  //   Array(columns).fill(<div class="cell" onClick={toggleColor}></div>)
-  // )
-  return Array(rows * columns).fill(<div class="cell" onClick={toggleColor}></div>)
+  return Array(rows * columns).fill(undefined)
 }
 
-function treasureCoords(rows, columns) {
-  return {
-    row: Math.floor(Math.random() * rows),
-    col: Math.floor(Math.random() * columns)
-  }
-}
+// function fossilSpot(rows, columns) {
+//   // return {
+//   //   row: Math.floor(Math.random() * rows),
+//   //   col: Math.floor(Math.random() * columns)
+//   // }
+//   setFossil(Math.floor(Math.random() * (rows * columns)))
+// }
 
 // function buryTreasure(grid) {
   // const randomRow = Math.floor(Math.random() * grid.length);
