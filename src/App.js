@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [grid, setGrid] = useState({ rows: 6, columns: 6 })
+  const [grid, setGrid] = useState({ rows: 9, columns: 3 })
+  const [fossil, buryFossil] = useState({})
 
   return (
     <>
@@ -27,15 +28,16 @@ function toggleColor() {
 
 // eventually, cell can be its own component
 function makeGrid(rows, columns) {
-  return Array(rows).fill(
-    Array(columns).fill(<div class="cell" onClick={toggleColor}></div>)
-  )
+  // return Array(rows).fill(
+  //   Array(columns).fill(<div class="cell" onClick={toggleColor}></div>)
+  // )
+  return Array(rows * columns).fill(<div class="cell" onClick={toggleColor}></div>)
 }
 
-function treasureCoords(grid) {
+function treasureCoords(rows, columns) {
   return {
-    row: Math.floor(Math.random() * grid.length),
-    col: Math.floor(Math.random() * grid[0].length)
+    row: Math.floor(Math.random() * rows),
+    col: Math.floor(Math.random() * columns)
   }
 }
 
