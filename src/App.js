@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { grid, buryTreasure, addFirstLayer } from './engine/grid';
 // import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [grid, setGrid] = useState({ rows: 6, columns: 6 })
+
   return (
     <>
       <h1>how do react</h1>
-      <div class="grid-container">
+      <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 50px)`}}>
         {
-          grid(6,6)
+          makeGrid(grid.rows, grid.columns)
         }
       </div>
     </>
@@ -19,12 +21,14 @@ function App() {
 // grid component
 // variables: treasure coords, tile coords
 
-function toggleColor() 
+function toggleColor() {
+  console.log('toggled')
+}
 
 // eventually, cell can be its own component
-function grid(rows, columns) {
+function makeGrid(rows, columns) {
   return Array(rows).fill(
-    Array(columns).fill(<div class="cell" onClick={}></div>)
+    Array(columns).fill(<div class="cell" onClick={toggleColor}></div>)
   )
 }
 
