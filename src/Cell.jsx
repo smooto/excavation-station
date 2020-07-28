@@ -6,19 +6,35 @@ const gameLevels = {
 }
 
 export default function Cell({ passClick, level, hasFossil }) {
-  const [tile, setTile] = useState(getTile(level))
-  const [clickCount, setClickCount] = useState(0)
+  const [maxClicks, setMaxClicks] = useState(getMaxClicks(level))
+  const [totalClicks, setTotalClicks] = useState(0)
+  const [tileClicks, setTileClicks] = useState(0)
   const [complete, setComplete] = useState(false)
+  const [tile, setTile] = useState(getTile(maxClicks, level))
   
   useEffect(() => {
+    if(totalClicks === maxClicks) {
+      setComplete(true)
+    }
+
+    if((gameLevels[level][tile] - tileClicks) === gameLevels[level][tile - 1]) {
+      setTileClicks(0)
+      setTile(tile - 1)
+    }
+  }, [totalClicks, maxClicks])
+
+  const handleClick = () => {
+    if(complete || totalClicks >= maxClicks) return
+    
+    setTotalClicks(totalClicks + 1)
+    setTileClicks(tileClicks + 1)
     passClick()
-    clickCount === tile ? setComplete(true) : setComplete(false);
-  }, [clickCount])
+  }
 
   return (
-    <div class="cell" onClick={() => setClickCount(clickCount + 1)}>
+    <div class="cell" onClick={handleClick}>
       <p>
-        {tile + ' ' + clickCount}
+        {maxClicks + ' ' + totalClicks}
         {hasFossil && <span>X</span>}
         {complete && <span>done</span>}
       </p>
@@ -26,7 +42,12 @@ export default function Cell({ passClick, level, hasFossil }) {
   )
 }
 
-function getTile(gameLevel) {
+function getMaxClicks(gameLevel) {
   const validTiles = gameLevels[gameLevel]
   return validTiles[Math.floor(Math.random() * validTiles.length)]
+}
+
+function getTile(maxClicks, gameLevel) {
+  const validTiles = gameLevels[gameLevel]
+  return validTiles.findIndex(el => el === maxClicks);
 }

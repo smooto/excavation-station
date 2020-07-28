@@ -21,7 +21,7 @@ function App() {
   }, [grid, maxFossils])
   
   const [level, setLevel] = useState(2)
-  const [totalClicks, setTotalClicks] = useState(-1)
+  const [totalClicks, setTotalClicks] = useState(0)
 
   return (
     <>
