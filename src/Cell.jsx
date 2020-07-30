@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react'
+// import './Cell.css';
 
 const gameLevels = {
-  1: [3, 5],
-  2: [3, 5, 7]
+  1: [0, 3, 6],
+  2: [0, 3, 6, 9]
 }
 
 export default function Cell({ passClick, level, hasFossil }) {
   const [maxClicks, setMaxClicks] = useState(getMaxClicks(level))
   const [totalClicks, setTotalClicks] = useState(0)
   const [tileClicks, setTileClicks] = useState(0)
+  const [tileClass, setTileClass] = useState(getTile(maxClicks, level))
+
   const [complete, setComplete] = useState(false)
-  const [tile, setTile] = useState(getTile(maxClicks, level))
   
   useEffect(() => {
     if(totalClicks === maxClicks) {
       setComplete(true)
     }
 
-    if((gameLevels[level][tile] - tileClicks) === gameLevels[level][tile - 1]) {
+    if((gameLevels[level][tileClass] - tileClicks) === gameLevels[level][tileClass - 1]) {
       setTileClicks(0)
-      setTile(tile - 1)
+      setTileClass(tileClass - 1)
     }
   }, [totalClicks, maxClicks])
 
@@ -32,7 +34,7 @@ export default function Cell({ passClick, level, hasFossil }) {
   }
 
   return (
-    <div class="cell" onClick={handleClick}>
+    <div class={`cell tile${tileClass} progress${tileClicks}`} onClick={handleClick}>
       <p>
         {maxClicks + ' ' + totalClicks}
         {hasFossil && <span>X</span>}
@@ -43,7 +45,7 @@ export default function Cell({ passClick, level, hasFossil }) {
 }
 
 function getMaxClicks(gameLevel) {
-  const validTiles = gameLevels[gameLevel]
+  const validTiles = gameLevels[gameLevel].slice(1, gameLevels[gameLevel].length)
   return validTiles[Math.floor(Math.random() * validTiles.length)]
 }
 

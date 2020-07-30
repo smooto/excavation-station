@@ -5,13 +5,13 @@
 }
 
 .cell {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   background-color: gray;
 }
 
 .treasure {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   background-color: gold;
 }

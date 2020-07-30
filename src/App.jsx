@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cell from './Cell';
 import './App.css';
+import './Cell.css';
 
 // const gameLevels = {
 //   1: [3, 5],
@@ -27,7 +28,7 @@ function App() {
     <>
       <h1>how do react</h1>
       <p>total clicks: {totalClicks}</p>
-      <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 50px)`}}>
+      <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 100px)`}}>
         {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
