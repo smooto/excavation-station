@@ -12,6 +12,7 @@ export default function Cell({ passClick, level, hasFossil }) {
   const [tileClicks, setTileClicks] = useState(0)
   const [tileClass, setTileClass] = useState(getTile(maxClicks, level))
 
+  const [showFossil, setShowFossil] = useState(false)
   const [complete, setComplete] = useState(false)
   
   useEffect(() => {
@@ -25,6 +26,12 @@ export default function Cell({ passClick, level, hasFossil }) {
     }
   }, [totalClicks, maxClicks])
 
+  useEffect(() => {
+    if(hasFossil && tileClass === 1) {
+      setShowFossil(true)
+    }
+  }, [hasFossil, tileClass])
+
   const handleClick = () => {
     if(complete || totalClicks >= maxClicks) return
     
@@ -34,13 +41,18 @@ export default function Cell({ passClick, level, hasFossil }) {
   }
 
   return (
-    <div class={`cell tile${tileClass} progress${tileClicks}`} onClick={handleClick}>
-      <p>
-        {maxClicks + ' ' + totalClicks}
-        {hasFossil && <span>X</span>}
-        {complete && <span>done</span>}
-      </p>
-    </div>
+    <>
+      <div class={`cell`} onClick={handleClick}>
+        <div class={`tile tile${tileClass} progress${tileClicks}`}>
+          <p>
+            {maxClicks + ' ' + totalClicks}
+            {complete && <span>done</span>}
+          </p>
+        </div>
+        {showFossil && <div class={`fossil`}>X</div>}
+      </div>
+
+    </>
   )
 }
 

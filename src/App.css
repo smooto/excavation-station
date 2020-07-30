@@ -1,4 +1,5 @@
 .grid-container {
+  position: relative;
   display: grid;
   /* grid-template-columns: repeat(6, 50px); */
   grid-gap: 5px;
@@ -7,11 +8,19 @@
 .cell {
   height: 100px;
   width: 100px;
-  background-color: gray;
+  position: relative;
 }
 
-.treasure {
-  height: 100px;
-  width: 100px;
-  background-color: gold;
+.tile {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+.fossil {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
 }
