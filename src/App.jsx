@@ -18,6 +18,7 @@ function App() {
   
   const [level, setLevel] = useState(2)
   const [totalDigs, setTotalDigs] = useState(0)
+  const [foundRelics, setFoundRelics] = useState([])
 
   return (
     <>
@@ -28,8 +29,8 @@ function App() {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
               return (relicSpots.includes(i))
-                ? <Cell passDig={() => setTotalDigs(totalDigs + 1)} level={level} hasRelic={true} />
-                : <Cell passDig={() => setTotalDigs(totalDigs + 1)} level={level} hasRelic={false} />;
+                ? <Cell passDig={() => setTotalDigs(totalDigs + 1)} passRelic={relic => setFoundRelics(foundRelics.concat(relic))} level={level} hasRelic={true} />
+                : <Cell passDig={() => setTotalDigs(totalDigs + 1)} passRelic={relic => setFoundRelics(foundRelics.concat(relic))} level={level} hasRelic={false} />;
             })
         }
       </div>

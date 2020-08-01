@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDigs } from './hooks/useDigs'
-// import { gameLevels } from './engine/models'
-// import './Cell.css';
+import { relics } from './engine/models'
 
-export default function Cell({ passDig, level, hasRelic }) {
-  const [showRelic, setShowRelic] = useState(false)
-
+export default function Cell({ passDig, passRelic, level, hasRelic }) {
   const {
     maxDigs,
     totalDigs,
@@ -14,12 +11,23 @@ export default function Cell({ passDig, level, hasRelic }) {
     complete,
     dig
   } = useDigs(level, passDig)
+  
+  const [relic, setRelic] = useState(null)
+  const [showRelic, setShowRelic] = useState(false)
+
+  useEffect(() => {
+    if(hasRelic) setRelic(relics[Math.floor(Math.random() * relics.length)])
+  }, [hasRelic])
 
   useEffect(() => {
     if(hasRelic && tileClass === 1) {
       setShowRelic(true)
     }
   }, [hasRelic, tileClass])
+
+  useEffect(() => {
+    if(hasRelic && complete) passRelic(relic)
+  }, [complete])
 
   return (
     <>
@@ -36,3 +44,7 @@ export default function Cell({ passDig, level, hasRelic }) {
     </>
   )
 }
+
+// function getRelic() {
+//   return relics[Math.floor(Math.random() * relics.length)]
+// }
