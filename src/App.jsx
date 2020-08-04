@@ -17,14 +17,25 @@ function App() {
   }, [grid, maxRelics])
   
   const [level, setLevel] = useState(2)
+
+  const [maxDigs, setMaxDigs] = useState(10)
   const [totalDigs, setTotalDigs] = useState(0)
+
+  const [complete, setComplete] = useState(false)
+
   const [foundRelics, setFoundRelics] = useState([])
+
+  useEffect(() => {
+    if(totalDigs === maxDigs) {
+      setComplete(true)
+    }
+  }, [totalDigs])
 
   return (
     <>
       <h1>how do react</h1>
       <p>total clicks: {totalDigs}</p>
-      <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 100px)`}}>
+      {!complete && <div class="grid-container" style={{gridTemplateColumns: `repeat(${grid.columns}, 100px)`}}>
         {
           makeGrid(grid.rows, grid.columns)
             .map((cell, i) => {
@@ -33,7 +44,15 @@ function App() {
                 : <Cell passDig={() => setTotalDigs(totalDigs + 1)} passRelic={relic => setFoundRelics(foundRelics.concat(relic))} level={level} hasRelic={false} />;
             })
         }
+      </div>}
+      {complete && <div>
+        <p>game over!!!</p>
+        {foundRelics[0] && <div>
+            you found:
+            {foundRelics.map(relic => <p>{relic}</p>)}
+          </div>}
       </div>
+      }
     </>
   );
 }
