@@ -1,0 +1,27 @@
+.tile3 {
+  background-color: red;
+}
+
+.tile2 {
+  background-color: gold;
+}
+
+.tile1 {
+  background-color: green;
+}
+
+.tile0 {
+  background-color: gray;
+}
+
+.progress0 {
+  filter: opacity(100%);
+}
+
+.progress1 {
+  filter: opacity(66%);
+}
+
+.progress2 {
+  filter: opacity(33%);
+}
