@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useDigs } from './hooks/useDigs'
 import { relics } from './engine/models'
+import { useTileDigs } from './hooks/useTileDigs'
 
 export default function Cell({ passDig, passRelic, level, hasRelic }) {
   const {
     maxDigs,
+    setTotalDigs,
     totalDigs,
-    tileClass,
+    complete
+  } = useDigs(level)
+
+  const {
+    setTileDigs,
     tileDigs,
-    complete,
-    dig
-  } = useDigs(level, passDig)
+    tileClass
+  } = useTileDigs(level, maxDigs)
+
+  const dig = () => {
+    if(complete || totalDigs >= maxDigs) return
+    
+    setTotalDigs(totalDigs + 1)
+    setTileDigs(tileDigs + 1)
+    passDig()
+  }
   
   const [relic, setRelic] = useState(null)
   const [showRelic, setShowRelic] = useState(false)
