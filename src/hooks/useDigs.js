@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { gameLevels } from '../engine/models';
+import { useLevel } from './levelContext';
 
-export function useDigs(level) {
+export function useDigs() {
+  const { level } = useLevel();
+
   const [maxDigs, setMaxDigs] = useState(getMaxDigs(level))
   const [totalDigs, setTotalDigs] = useState(0)
 

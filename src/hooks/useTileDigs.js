@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { gameLevels } from '../engine/models';
+import { useLevel } from './levelContext';
 
-export function useTileDigs(level, maxDigs) {
+export function useTileDigs(maxDigs) {
+  const { level } = useLevel();
+
   const [tileDigs, setTileDigs] = useState(0)
   const [tileClass, setTileClass] = useState(getTile(maxDigs, level))
   

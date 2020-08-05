@@ -2,20 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { useDigs } from './hooks/useDigs'
 import { relics } from './engine/models'
 import { useTileDigs } from './hooks/useTileDigs'
+import { useLevel } from './hooks/levelContext'
 
-export default function Cell({ passDig, passRelic, level, hasRelic }) {
+export default function Cell({ passDig, passRelic, hasRelic }) {
+  // const { level } = useLevel()
+
   const {
     maxDigs,
     setTotalDigs,
     totalDigs,
     complete
-  } = useDigs(level)
+  } = useDigs()
 
   const {
     setTileDigs,
     tileDigs,
     tileClass
-  } = useTileDigs(level, maxDigs)
+  } = useTileDigs(maxDigs)
 
   const dig = () => {
     if(complete || totalDigs >= maxDigs) return
